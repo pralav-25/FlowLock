@@ -1,5 +1,7 @@
 # FlowLock
 
+[![Checks](https://github.com/pralav-25/FlowLock/actions/workflows/ci.yml/badge.svg)](https://github.com/pralav-25/FlowLock/actions/workflows/ci.yml)
+
 An interactive API-security concept focused on behavior-based abuse detection,
 adaptive defense, and rate-limit bypass scenarios. It was created as a front-end
 prototype for Code Craft Chase 2.0.
@@ -36,3 +38,13 @@ Then open `http://localhost:8000`.
 FlowLock is a user-interface and product-concept prototype. It does not ship a
 production API gateway or detection engine, and should not be represented as a
 deployed security control.
+
+## Interaction and validation
+
+Mobile navigation supports Escape, focus return, and a focus loop. Calls to
+action lead to the architecture, repository, or an email draft. Prices remain
+illustrative; there is no trial signup or billing service.
+
+Run `python3 scripts/check_site.py` with Node.js installed to validate local
+resources, fragments, duplicate IDs, and JavaScript syntax. The same checks run
+in GitHub Actions on pushes and pull requests.

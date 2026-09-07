@@ -374,19 +374,22 @@
         #shape-blur-container {
             width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: auto;
         }
+        a:focus-visible, button:focus-visible { outline: 3px solid #60a5fa; outline-offset: 4px; }
     </style>
 </head>
 <body class="antialiased">
 
+    <p style="position:relative;z-index:60;margin:0;padding:10px 20px;background:#172554;color:#fff;text-align:center">Interactive architecture concept · API protection and pricing are illustrative.</p>
+
     <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu-overlay">
+    <div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Mobile navigation" inert>
         <a href="#" class="mobile-link" onclick="toggleMobileMenu()">Home</a>
         <a href="#problem" class="mobile-link" onclick="toggleMobileMenu()">Problem</a>
         <a href="#adaptive" class="mobile-link" onclick="toggleMobileMenu()">Adaptive</a>
         <a href="#solution" class="mobile-link" onclick="toggleMobileMenu()">Solution</a>
         <a href="#usecases" class="mobile-link" onclick="toggleMobileMenu()">Use Cases</a>
         <a href="#pricing" class="mobile-link" onclick="toggleMobileMenu()">Pricing</a>
-        <button class="mt-8 text-apple-lightGray hover:text-white" onclick="toggleMobileMenu()">
+        <button aria-label="Close menu" class="mt-8 text-apple-lightGray hover:text-white" onclick="toggleMobileMenu()">
             <i class="fa-solid fa-xmark text-3xl"></i>
         </button>
     </div>
@@ -437,7 +440,7 @@
                 
                 <!-- Mobile menu Toggle -->
                 <div class="md:hidden text-apple-text w-32 flex justify-end">
-                    <button onclick="toggleMobileMenu()" aria-label="Open Menu">
+                    <button id="menu-toggle" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu-overlay">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -719,7 +722,7 @@
                         <li class="flex gap-3"><i class="fa-solid fa-check text-white"></i> Basic Scoring</li>
                         <li class="flex gap-3"><i class="fa-solid fa-check text-white"></i> Community Support</li>
                     </ul>
-                    <a href="#" class="block w-full py-3 bg-[#333] hover:bg-[#444] text-white text-center rounded-full text-sm font-medium transition-colors">Get Started</a>
+                    <a href="#solution" class="block w-full py-3 bg-[#333] hover:bg-[#444] text-white text-center rounded-full text-sm font-medium transition-colors">Explore the concept</a>
                 </div>
 
                 <!-- Pro -->
@@ -735,7 +738,7 @@
                         <li class="flex gap-3"><i class="fa-solid fa-check text-apple-blue"></i> Advanced Throttling</li>
                         <li class="flex gap-3"><i class="fa-solid fa-check text-apple-blue"></i> Real-time Dashboard</li>
                     </ul>
-                    <a href="#" class="block w-full py-3 bg-apple-blue hover:bg-apple-blueHover text-white text-center rounded-full text-sm font-medium transition-colors">Start Free Trial</a>
+                    <a href="https://github.com/pralav-25/FlowLock" class="block w-full py-3 bg-apple-blue hover:bg-apple-blueHover text-white text-center rounded-full text-sm font-medium transition-colors">Read the source</a>
                 </div>
 
                 <!-- Enterprise -->
@@ -748,7 +751,7 @@
                         <li class="flex gap-3"><i class="fa-solid fa-check text-white"></i> Custom Rules Engine</li>
                         <li class="flex gap-3"><i class="fa-solid fa-check text-white"></i> 24/7 Priority Support</li>
                     </ul>
-                    <a href="#" class="block w-full py-3 bg-transparent border border-[#333] hover:bg-[#333] text-white text-center rounded-full text-sm font-medium transition-colors">Contact Sales</a>
+                    <a href="mailto:singhpralav07@gmail.com?subject=FlowLock%20project" class="block w-full py-3 bg-transparent border border-[#333] hover:bg-[#333] text-white text-center rounded-full text-sm font-medium transition-colors">Discuss the project</a>
                 </div>
             </div>
         </div>
@@ -820,9 +823,7 @@
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-apple-lightGray">Copyright © 2026 FlowLock Inc. All rights reserved.</p>
                 <div class="flex gap-6">
-                    <a href="#" class="text-apple-lightGray hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
-                    <a href="#" class="text-apple-lightGray hover:text-white transition-colors"><i class="fa-brands fa-twitter text-lg"></i></a>
-                    <a href="#" class="text-apple-lightGray hover:text-white transition-colors"><i class="fa-brands fa-linkedin text-lg"></i></a>
+                    <a href="https://github.com/pralav-25/FlowLock" class="text-apple-lightGray hover:text-white transition-colors"><i class="fa-brands fa-github text-lg" aria-hidden="true"></i><span class="sr-only">GitHub source</span></a>
                 </div>
             </div>
         </div>
@@ -833,10 +834,29 @@
         // MOBILE MENU LOGIC
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobile-menu-overlay');
-            if (overlay) {
-                overlay.classList.toggle('open');
-            }
+            const toggle = document.getElementById('menu-toggle');
+            const open = !overlay.classList.contains('open');
+            overlay.inert = !open;
+            overlay.classList.toggle('open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+            document.body.style.overflow = open ? 'hidden' : '';
+            if (open) overlay.querySelector('a').focus();
+            else toggle.focus();
         }
+        document.addEventListener('keydown', (event) => {
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (!overlay.classList.contains('open')) return;
+            if (event.key === 'Escape') { event.preventDefault(); toggleMobileMenu(); }
+            if (event.key === 'Tab') {
+                const items = [...overlay.querySelectorAll('a, button')];
+                const first = items[0], last = items[items.length - 1];
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+            }
+        });
+        window.matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+            if (event.matches && document.getElementById('mobile-menu-overlay').classList.contains('open')) toggleMobileMenu();
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             initDock();
