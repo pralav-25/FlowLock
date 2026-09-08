@@ -795,34 +795,32 @@
                     </p>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <h4 class="text-white font-semibold mb-4">Explore</h4>
                     <ul class="space-y-3 text-apple-lightGray">
-                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Integrations</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
+                        <li><a href="#solution" class="hover:text-white">Proposed approach</a></li>
+                        <li><a href="#adaptive" class="hover:text-white">Adaptive defense</a></li>
+                        <li><a href="#tech" class="hover:text-white">Technology</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <h4 class="text-white font-semibold mb-4">Project</h4>
                     <ul class="space-y-3 text-apple-lightGray">
-                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="https://github.com/pralav-25/FlowLock" class="hover:text-white">Source code</a></li>
+                        <li><a href="https://github.com/pralav-25/FlowLock#readme" class="hover:text-white">Project documentation</a></li>
+                        <li><a href="https://github.com/pralav-25/FlowLock/commits/main/" class="hover:text-white">Change history</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-4">Legal</h4>
+                    <h4 class="text-white font-semibold mb-4">Learn more</h4>
                     <ul class="space-y-3 text-apple-lightGray">
-                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#faq" class="hover:text-white">Questions and answers</a></li>
+                        <li><a href="#usecases" class="hover:text-white">Example use cases</a></li>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-apple-lightGray">Copyright © 2026 FlowLock Inc. All rights reserved.</p>
+                <p class="text-apple-lightGray">© 2026 FlowLock · API security concept project.</p>
                 <div class="flex gap-6">
                     <a href="https://github.com/pralav-25/FlowLock" class="text-apple-lightGray hover:text-white transition-colors"><i class="fa-brands fa-github text-lg" aria-hidden="true"></i><span class="sr-only">GitHub source</span></a>
                 </div>
@@ -1013,6 +1011,7 @@
         }
 
         function initDitherWaves(containerId) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             const container = document.getElementById(containerId);
             if (!container) return;
             
@@ -1527,6 +1526,7 @@
         // SHAPE BLUR LOGIC (Vanilla Three.js)
         // ==========================================
         function initShapeBlur(containerId) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             const container = document.getElementById(containerId);
             if (!container) return;
 

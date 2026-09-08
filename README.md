@@ -48,3 +48,7 @@ illustrative; there is no trial signup or billing service.
 Run `python3 scripts/check_site.py` with Node.js installed to validate local
 resources, fragments, duplicate IDs, and JavaScript syntax. The same checks run
 in GitHub Actions on pushes and pull requests.
+
+Footer navigation links to implemented sections, repository documentation, and
+change history. Visitors requesting reduced motion do not start the two
+continuous WebGL background effects.
