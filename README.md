@@ -33,6 +33,21 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000`.
 
+## Explore the concept
+
+The page navigation follows the proposed security story:
+
+| Section | What to review |
+| --- | --- |
+| Problem | The API-abuse problem motivating the concept |
+| Adaptive | The adaptive-defense visualization |
+| Solution and Tech | The proposed approach and technology narrative |
+| Use Cases | Example threat scenarios |
+| Pricing and Q&A | Illustrative plans and questions about the concept |
+
+All sections live in [index.html](index.html). When changing a section, preserve
+its existing `id` so the desktop dock, mobile menu, and footer links still work.
+
 ## Scope
 
 FlowLock is a user-interface and product-concept prototype. It does not ship a
