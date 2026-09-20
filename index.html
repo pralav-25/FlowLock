@@ -705,6 +705,25 @@
     </section>
 
     <!-- PRICING SECTION -->
+    <section id="rate-lab" class="py-24 bg-black border-y border-white/10" aria-labelledby="rate-lab-title">
+      <div class="max-w-4xl mx-auto px-6">
+        <p class="text-blue-400 mb-3">INTERACTIVE LAB</p>
+        <h2 id="rate-lab-title" class="text-3xl md:text-5xl font-bold mb-6">Two bursts. One window boundary.</h2>
+        <p class="text-gray-300 mb-8">Compare a fixed 60-second counter with a sliding 60-second log for one client. The same burst arrives at 59.999 seconds and again at 60.001 seconds.</p>
+        <form id="rate-lab-form" class="grid md:grid-cols-2 gap-6">
+          <label for="rate-limit">Requests allowed per 60 seconds
+            <input id="rate-limit" type="number" min="1" max="500" step="1" value="60" required class="block w-full mt-2 p-3 bg-[#161617] rounded-xl border border-white/20">
+          </label>
+          <label for="rate-burst">Requests in each burst
+            <input id="rate-burst" type="number" min="1" max="500" step="1" value="60" required class="block w-full mt-2 p-3 bg-[#161617] rounded-xl border border-white/20">
+          </label>
+          <button type="submit" class="p-3 rounded-xl bg-blue-600 text-white">Compare limits</button>
+        </form>
+        <div id="rate-lab-result" role="status" aria-live="polite" class="mt-8 grid md:grid-cols-2 gap-6"></div>
+        <p class="text-gray-400 mt-6">A fixed counter resets at the minute boundary; a sliding log retains recently accepted requests. This deterministic teaching simulation does not send traffic or implement FlowLock's proposed adaptive defense.</p>
+      </div>
+    </section>
+
     <section id="pricing" class="py-24 md:py-32 bg-black">
         <div class="max-w-screen-xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -1706,5 +1725,27 @@
             }
         }
     </script>
+<script src="scripts/rate-limit.js"></script>
+<script>
+  function renderRateLab(event) {
+    event?.preventDefault();
+    const form = document.getElementById('rate-lab-form');
+    if (!form.reportValidity()) return;
+    const limit = Number(document.getElementById('rate-limit').value);
+    const burst = Number(document.getElementById('rate-burst').value);
+    const times = [...Array(burst).fill(59999), ...Array(burst).fill(60001)];
+    const result = FlowLockSimulation.compareWindows(times, { limit });
+    const output = document.getElementById('rate-lab-result');
+    output.replaceChildren();
+    for (const [label, stats] of [['Fixed window', result.fixed], ['Sliding window', result.sliding]]) {
+      const card = document.createElement('div'); card.className = 'p-6 rounded-xl bg-[#161617] border border-white/10';
+      const title = document.createElement('h3'); title.className = 'text-xl font-bold mb-3'; title.textContent = label;
+      const detail = document.createElement('p'); detail.textContent = `${stats.accepted} accepted · ${stats.rejected} rejected of ${result.total} requests`;
+      card.append(title, detail); output.append(card);
+    }
+  }
+  document.getElementById('rate-lab-form').addEventListener('submit', renderRateLab);
+  renderRateLab();
+</script>
 </body>
 </html>
