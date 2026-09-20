@@ -67,3 +67,14 @@ in GitHub Actions on pushes and pull requests.
 Footer navigation links to implemented sections, repository documentation, and
 change history. Visitors requesting reduced motion do not start the two
 continuous WebGL background effects.
+
+## Rate-limit window lab
+
+The interactive lab sends two simulated bursts across a minute boundary and
+compares accepted/rejected counts for fixed and sliding 60-second windows.
+Change the per-window limit and burst size (1–500) and select **Compare limits**.
+It runs entirely locally and generates no API traffic. The sliding model counts
+accepted requests in `(now - 60 seconds, now]`; it is an educational comparison,
+not the proposed adaptive detection engine.
+
+Run `node --test tests/*.test.cjs` for boundary, expiry, and input-validation cases.
