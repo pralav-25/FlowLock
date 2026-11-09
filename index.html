@@ -828,6 +828,7 @@
         </div>
     </footer>
 
+    <script src="scripts/loop-math.js"></script>
     <!-- LOGIC SCRIPTS -->
     <script>
         // MOBILE MENU LOGIC
@@ -968,10 +969,7 @@
                 function step() {
                     if (!drag) {
                         const delta = direction === 'right' ? speed : -speed;
-                        let newOffset = offset + delta;
-                        if (newOffset <= -wrapPoint) newOffset += wrapPoint;
-                        if (newOffset > 0) newOffset -= wrapPoint;
-                        offset = newOffset;
+                        offset = FlowLockLoop.wrapOffset(offset + delta, wrapPoint) - wrapPoint;
                         textPath.setAttribute('startOffset', offset + 'px');
                     }
                     requestAnimationFrame(step);
@@ -991,10 +989,7 @@
                         const dx = e.clientX - lastX;
                         lastX = e.clientX;
                         velocity = dx;
-                        let newOffset = offset + dx;
-                        if (newOffset <= -wrapPoint) newOffset += wrapPoint;
-                        if (newOffset > 0) newOffset -= wrapPoint;
-                        offset = newOffset;
+                        offset = FlowLockLoop.wrapOffset(offset + dx, wrapPoint) - wrapPoint;
                         textPath.setAttribute('startOffset', offset + 'px');
                     });
                     const endDrag = () => {
@@ -1257,6 +1252,7 @@
             requestAnimationFrame(() => {
                 const listWidth = list1.offsetWidth;
                 const viewportWidth = container.clientWidth;
+                if (!Number.isFinite(listWidth) || listWidth <= 0) return;
                 const copiesNeeded = Math.ceil(viewportWidth / listWidth) + 2;
                 
                 for(let i=1; i<copiesNeeded; i++) {
@@ -1274,8 +1270,7 @@
 
                     offset += velocity * dt;
 
-                    if (offset >= listWidth) offset -= listWidth;
-                    if (offset < 0) offset += listWidth;
+                    offset = FlowLockLoop.wrapOffset(offset, listWidth);
 
                     track.style.transform = `translate3d(${-offset}px, 0, 0)`;
                     

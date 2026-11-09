@@ -67,3 +67,8 @@ in GitHub Actions on pushes and pull requests.
 Footer navigation links to implemented sections, repository documentation, and
 change history. Visitors requesting reduced motion do not start the two
 continuous WebGL background effects.
+
+The logo strip and draggable marquee share the cyclic-position calculation in
+`scripts/loop-math.js`. It keeps long tab pauses and large drags within one loop,
+and the logo strip only creates copies when its geometry is measurable.
+Run `node --test tests/*.test.cjs` for the loop-position regression tests.
