@@ -1432,6 +1432,22 @@
                 return el;
             });
 
+            // Keep every use case readable without automatic movement.
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || typeof gsap === 'undefined') {
+                container.style.width = '100%';
+                container.style.height = 'auto';
+                container.style.display = 'grid';
+                container.style.gap = '12px';
+                container.parentElement.style.height = 'auto';
+                cardEls.forEach(el => {
+                    el.style.position = 'static';
+                    el.style.height = 'auto';
+                    el.style.minHeight = '180px';
+                    el.style.willChange = 'auto';
+                });
+                return;
+            }
+
             // Initial Position
             const total = cardEls.length;
             
